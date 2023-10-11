@@ -1,31 +1,31 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
-	"version": "${version}",
-	"name": "Example mod",
+	"id": "luckyblockmod",
+	"version": "Alpha-1.0.0",
+	"name": "Lucky Block Mod",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Me!"
+		"Deine Mudda @ GoldPerBrief"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/LuckyBlockMod/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"de.goldperbrief.luckyBlockMod.LuckyBlockMod"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"de.goldperbrief.luckyBlockMod.LuckyBlockModClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"LuckyBlockMod.mixins.json",
 		{
-			"config": "modid.client.mixins.json",
+			"config": "LuckyBlockMod.client.mixins.json",
 			"environment": "client"
 		}
 	],
