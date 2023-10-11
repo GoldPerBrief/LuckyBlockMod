@@ -2,16 +2,25 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "luckyblocks:lucky_block"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
+          "name": "luckyblocks:lucky_block",
+          "condition": "minecraft:survives_explosion",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "luck",
+                  "target": "BlockEntityTag.luck",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

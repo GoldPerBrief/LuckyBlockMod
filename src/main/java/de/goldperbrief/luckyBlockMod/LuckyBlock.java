@@ -1,42 +1,42 @@
 package de.goldperbrief.luckyBlockMod;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.BlockView;
 
-public class LuckyBlock extends Block {
+import java.util.List;
+
+public class LuckyBlock extends BlockWithEntity {
     public LuckyBlock(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState().with(LUCK, 100));
     }
 
-    public static final IntProperty LUCK = IntProperty.of("luck",0,200);
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new LuckyBlockBlockEntity(pos, state);
+    }
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (hand.equals(Hand.MAIN_HAND) && ItemStack.EMPTY.itemMatches(player.getMainHandStack(), Item.byRawId(Item.getRawId(Items.EMERALD)))) {
-//            player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BIT, 1, 1);
-            world.setBlockState(pos, state.with(LUCK, +6));
-            return ActionResult.SUCCESS;
-        } else {
-            ActionResult.FAIL;
+    public void appendTooltip(ItemStack stack, BlockView world, List<Text> tooltip, TooltipContext context) {
+        NbtCompound nbt = BlockItem.getBlockEntityNbt(stack);
+        if (nbt == null ) {
+            nbt = new NbtCompound();
+            nbt.putInt("luck", 100);
+
+            BlockItem.setBlockEntityNbt(stack, LuckyBlockMod.LUCKY_BLOCK_BLOCK_ENTITY, nbt);
         }
 
-        return ActionResult.SUCCESS;
+        tooltip.add(Text.literal("Luck: "+nbt.getInt("luck")));
     }
 
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(LUCK);
-    }
 }

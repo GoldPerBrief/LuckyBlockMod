@@ -15,6 +15,9 @@
 	"icon": "assets/LuckyBlockMod/icon.png",
 	"environment": "*",
 	"entrypoints": {
+		"fabric-datagen": [
+			"de.goldperbrief.luckyBlockMod.LuckyBlockModDataGeneration"
+		],
 		"main": [
 			"de.goldperbrief.luckyBlockMod.LuckyBlockMod"
 		],
